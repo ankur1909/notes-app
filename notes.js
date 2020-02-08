@@ -1,9 +1,5 @@
 const fs = require('fs');
 
-const getNotes = function () {
-    return 'Your notes ....';
-};
-
 const addNote = (title, body) => {
     const notes = loadNotes();
     const duplicateNotes = notes.filter(el => {
@@ -37,8 +33,25 @@ const removeNote = (title) => {
     }
 }
 
+const listNotes = () => {
+    const notes = loadNotes();
+    notes.forEach(el => {
+        console.log('Title: ', el.title);
+        console.log('Body: ', el.body);
+    })
+}
+
 const saveNotes = (notesArray) => {
     fs.writeFileSync('notes.json', JSON.stringify(notesArray));
+}
+
+const readNotes = (title) => {
+    const notes = loadNotes();
+    const note = notes.filter(el => el.title===title);
+    note.forEach(el => {
+        console.log(el.title);
+        console.log(el.body);
+    })
 }
 const loadNotes = () => {
     try{
@@ -50,4 +63,4 @@ const loadNotes = () => {
         return [];
     }
 }
-module.exports = {getNotes, addNote, removeNote};
+module.exports = {addNote, removeNote, listNotes, readNotes};
